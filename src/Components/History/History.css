@@ -1,0 +1,39 @@
+h1, h3 {
+    text-align: center;
+}
+
+.book {
+    width: 80px;
+    margin: 0px 14px;
+    box-shadow: 6px 6px 6px grey;
+}
+
+.rating-circle {
+    border: solid 1px black; 
+    border-radius: 100%;
+    width: 10px;
+    height: 10px;
+    margin-left: 4px;
+    margin-bottom: 14px;
+}
+
+.green {
+    background: #52D39C;
+}
+
+.rating-holder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-text-holder {
+    margin: 16px;
+    display: flex;
+}
+
+.right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

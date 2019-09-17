@@ -1,0 +1,57 @@
+* {
+    box-sizing: border-box;
+    margin: 0px;
+}
+
+.hero {
+    display: flex;
+    justify-content: center;
+}
+
+.logo {
+    margin: 40px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 48px;
+    width: 75%;
+    padding: 16px;
+    font-size: 18px;
+    color: #707070;
+    background: white;
+    box-shadow: 6px 6px 6px grey;
+}
+
+input {
+    background: #EFEAEA;
+    margin: 16px;
+    border: none;
+    border-radius: 25px;
+    height: 24px;
+    padding: 8px;
+}
+
+button {
+    margin: 8px;
+    border: 2px solid black;
+    font-size: 16px;
+    border-radius: 18px;
+    width: 50%;
+    background: white;
+}
+
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.landing-page {
+    background: #4995C1;
+    height: 100vh;
+}
