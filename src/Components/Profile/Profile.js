@@ -4,6 +4,7 @@ import next from '../../images/next.png';
 import './Profile.css'
 import Nav from '../Nav/Nav';
 import ProgressBar from '../ProgressBar/ProgressBar';
+import { Link } from 'react-router-dom';
 
 class Profile extends React.Component {
     state = {
@@ -27,15 +28,15 @@ class Profile extends React.Component {
             <section>
                 <h2 className="profile-title">To Read</h2>
                 <div className="book-holder">
-                    {this.state.toRead.map(book => <img className="book" key={book.title} src={demo} alt={book.title}></img>)}
-                    <img className="next" src={next} alt="more"></img>
+                    {this.state.toRead.map(book => <img className="profile-book" key={book.title} src={demo} alt={book.title}></img>)}
+                    <Link to="/user/1/toread"><img className="next" src={next} alt="more"></img></Link>
                 </div>
             </section>
             <section>
                 <h2 className="profile-title">History</h2>
                 <div className="book-holder">
-                    {this.state.history.map(book => <img className="book" key={book.title} src={demo} alt={book.title}></img>)}
-                    <img className="next" src={next} alt="more"></img>
+                    {this.state.history.map(book => <img className="profile-book" key={book.title} src={demo} alt={book.title}></img>)}
+                    <Link to="/user/1/history"><img className="next" src={next} alt="more"></img></Link>
                 </div>
             </section>
             <section>
@@ -45,7 +46,7 @@ class Profile extends React.Component {
                 </div>
             </section>
             <div className="button-holder">
-                <button>Add Book</button>
+                <Link to="/search"><div className="add">Add Book</div></Link>
             </div>  
             </>
         )

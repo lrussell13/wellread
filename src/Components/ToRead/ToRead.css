@@ -1,0 +1,15 @@
+h1, h3 {
+    text-align: center;
+}
+
+.toread-book {
+    width: 80px;
+    margin: 14px 0px;
+    box-shadow: 6px 6px 6px grey;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,4 +1,4 @@
-input {
+.book-search-input {
     background: #EFEAEA;
     margin: 16px;
     border: none;
@@ -27,4 +27,25 @@ input {
 
 h4, h3 {
     margin: 8px;
+}
+
+.searchType {
+    height: 48px;
+    width: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: lightgray;
+}
+
+.blue {
+    background: #4995C1;
+    color: white;
+}
+
+.searchTypeHolder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 14px;
 }

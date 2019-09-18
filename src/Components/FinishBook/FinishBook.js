@@ -5,7 +5,8 @@ class FinishBook extends React.Component {
     state = {
         rating: 3,
         title: "Title 1",
-        author: "Author 1"
+        author: "Author 1",
+        toDashboard: false
     }
     
     createRating(rating){
@@ -24,11 +25,14 @@ class FinishBook extends React.Component {
         return ratingCircles;
     }
     
+    onSubmit(){
+    }
+
     render(){
         return (
             <div className="finish-book">
               <section className="finish-form">
-                  <form>
+                  <form onSubmit={() => this.onSubmit()} className="finish-book-form">
                         <label htmlFor="title">Title</label>
                         <h4>{this.state.title}</h4>
                         <label htmlFor="author">Author</label>

@@ -1,6 +1,7 @@
 import React from 'react';
 import './Login.css';
 import logo from '../../images/logo.png';
+import { Link } from 'react-router-dom';
 
 function Login() {
   return (
@@ -11,12 +12,14 @@ function Login() {
             </div>
         </header>
         <section className="login">
-            <form>
-                <label for="username">Username</label>
+            <form className="login-form">
+                <label htmlFor="username">Username</label>
                 <input id="username" />
-                <label for="password">Password</label>
-                <input id="password" />
-                <button type="submit">Login</button>
+                <label htmlFor="password">Password</label>
+                <input id="password" type="password"/>
+                <Link to="/user/1">
+                <div className="login-button">Login</div>
+                </Link>
                 <button>Register</button>
                 <button>Demo</button>
             </form>

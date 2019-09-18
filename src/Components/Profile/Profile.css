@@ -4,7 +4,7 @@
     justify-content: center;
 }
 
-.book {
+.profile-book {
     width: 22%;
     margin-left: 14px;
     box-shadow: 6px 6px 6px grey;
@@ -34,21 +34,40 @@ h3 {
     font-size: 16px;
 }
 
+h2 {
+    margin: 14px;
+}
+
+h1 {
+    margin: 18px;
+}
+
 .next {
     height: 40px;
     margin: 0px 14px;
 }
 
-button {
+.add {
     margin: 8px;
     border: 2px solid black;
     font-size: 16px;
     border-radius: 18px;
-    width: 50%;
+    width: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: white;
     height: 32px;
 }
 
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    cursor: pointer;
+}
 
 .button-holder {
     display: flex;

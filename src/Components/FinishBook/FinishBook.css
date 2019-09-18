@@ -3,7 +3,7 @@
     margin: 0px;
 }
 
-form {
+.finish-book-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
