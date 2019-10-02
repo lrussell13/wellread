@@ -49,3 +49,18 @@ h4, h3 {
     justify-content: center;
     margin-top: 14px;
 }
+
+.results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@media only screen and (min-width: 800px) {
+    .results {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+}

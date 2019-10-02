@@ -1,18 +1,67 @@
 import React from 'react';
-import demo from '../../images/demo.jpg';
 import next from '../../images/next.png';
 import './Profile.css'
 import Nav from '../Nav/Nav';
 import ProgressBar from '../ProgressBar/ProgressBar';
-import { Link } from 'react-router-dom';
+import UserBookServices from '../Services/user-books-services';
+import lvlService from '../Services/user-lvl-service';
+import { Link, withRouter } from 'react-router-dom';
 
 class Profile extends React.Component {
+    chooseImage(book){
+        if(book.cover_i){
+            return <img key={book.id} className="profile-book" src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`} alt={book.title}></img>
+        }
+
+        if(book.oclc){
+            return <img key={book.id} className="profile-book" src={`https://covers.openlibrary.org/b/oclc/${book.oclc}-M.jpg`} alt={book.title}></img>
+        }
+
+        if(book.isbn){
+            return <img key={book.id}  className="profile-book" src={`https://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`} alt={book.title}></img>
+        }
+
+        return "";
+    }
+
     state = {
-        toRead: [{title: "Harry Potter 1", img: {demo}}, {title: "Harry Potter 2", img: {demo}}, {title: "Harry Potter 3", img: {demo}}],
-        history: [{title: "Harry Potter 1", img: {demo}}, {title: "Harry Potter 2", img: {demo}}, {title: "Harry Potter 3", img: {demo}}],
-        achievements: [{title: '1'}, {title: '3'}, {title: '4'}],
-        goal: 50,
-        progress: 37
+        toRead: [],
+        history: [],
+        current: [],
+        lvl: [{lvl: 0}],
+        lvlGoals: [1, 3, 5, 10, 15, 25, 50, 75, 100]
+    }
+    
+    getBooks = () => {
+        UserBookServices.getUsersBooks()
+        .then(res => res.json())
+        .then(books => {
+            let toRead = books.filter(book => book.book_status === 1);
+            let current = books.filter(book => book.book_status === 2);
+            let history = books.filter(book => book.book_status === 3);
+    
+            this.setState({toRead, history, current});
+        })
+    }
+
+    getUserLvl = () => {
+        lvlService.getUserLvl()
+        .then(res => res.json())
+        .then(lvl => {
+            if(this.state.lvlGoals[lvl[0].lvl] === this.state.history.length){
+                const newLvl = { lvl: lvl[0].lvl + 1}  
+            
+                lvlService.updateUserLvl(lvl[0].id, newLvl)
+                .then(() => this.props.history.push('/user'))
+            } else {
+                this.setState({lvl})
+            }
+        })
+    }
+
+    componentDidMount(){
+        this.getBooks();
+        this.getUserLvl();
     }
 
     render(){
@@ -21,28 +70,29 @@ class Profile extends React.Component {
             <Nav />
             <h1>My Profile</h1>
             <section>
-                <h3>Goal: {this.state.goal}</h3>
-                <ProgressBar goal={this.state.goal} progress={this.state.progress}/>
-                <h3>Progress: {this.state.progress}</h3>
+                <h2>Level: {this.state.lvl[0].lvl}</h2>
+                <ProgressBar goal={this.state.lvlGoals[this.state.lvl[0].lvl]} progress={this.state.history.length} lvl={this.state.lvl}/>
+                <h3>Progress: {this.state.history.length}/{this.state.lvlGoals[this.state.lvl[0].lvl]}</h3>
             </section>
             <section>
                 <h2 className="profile-title">To Read</h2>
                 <div className="book-holder">
-                    {this.state.toRead.map(book => <img className="profile-book" key={book.title} src={demo} alt={book.title}></img>)}
-                    <Link to="/user/1/toread"><img className="next" src={next} alt="more"></img></Link>
+                    {this.state.toRead.filter((book, i) => i < 3).map(book => this.chooseImage(book))}
+                    <Link to={`/user/toread`}><img className="next" src={next} alt="more"></img></Link>
                 </div>
             </section>
             <section>
                 <h2 className="profile-title">History</h2>
                 <div className="book-holder">
-                    {this.state.history.map(book => <img className="profile-book" key={book.title} src={demo} alt={book.title}></img>)}
-                    <Link to="/user/1/history"><img className="next" src={next} alt="more"></img></Link>
+                    {this.state.history.filter((book, i) => i < 3).map(book => this.chooseImage(book))}
+                    <Link to={`/user/history`}><img className="next" src={next} alt="more"></img></Link>
                 </div>
             </section>
             <section>
-                <h2 className="profile-title">Achievements</h2>
-                <div className="achievement-holder">
-                    {this.state.history.map(achievement => <div className="achievement" key={achievement.title}></div>)}
+                <h2 className="profile-title">Currently Reading</h2>
+                <div className="book-holder">
+                    {this.state.current.filter((book, i) => i < 3).map(book => this.chooseImage(book))}
+                    <Link to={`/user/current`}><img className="next" src={next} alt="more"></img></Link>
                 </div>
             </section>
             <div className="button-holder">
@@ -54,4 +104,4 @@ class Profile extends React.Component {
 
 }
 
-export default Profile;
+export default withRouter(Profile);

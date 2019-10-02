@@ -1,15 +1,49 @@
 import React from 'react';
 import Nav from '../Nav/Nav';
-import demo from '../../images/demo.jpg';
+import {withRouter} from 'react-router-dom';
+import UserBookServices from '../Services/user-books-services';
 import './History.css';
 
 class History extends React.Component {
     state = {
-        history: [
-            {title: "Title 1", author: "Author 1", rating: 4, notes: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."},
-            {title: "Title 2", author: "Author 2", rating: 3, notes: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."},
-            {title: "Title 3", author: "Author 3", rating: 5, notes: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."},
-        ]
+        history: [],
+    }
+    
+    getBooks = () => {
+        UserBookServices.getUsersBooks()
+        .then(res => res.json())
+        .then(books => {
+            let history = books.filter(book => book.book_status === 3);
+    
+            this.setState({ history });
+        })
+    }
+
+    chooseImage(book){
+        if(book.cover_i){
+            return <img className="history-book" src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`} alt={book.title}></img>
+        }
+
+        if(book.oclc){
+            return <img className="history-book" src={`https://covers.openlibrary.org/b/oclc/${book.oclc}-M.jpg`} alt={book.title}></img>
+        }
+
+        if(book.isbn){
+            return <img className="history-book" src={`https://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`} alt={book.title}></img>
+        }
+
+        return "";
+    }
+    
+    componentDidMount(){
+        this.getBooks();
+    }
+
+    onDelete(e, id){
+        e.preventDefault();
+
+        UserBookServices.deleteUserBooks(id)
+        .then(() => this.props.history.push('/user/history'))
     }
 
     createRating(rating){
@@ -46,9 +80,10 @@ class History extends React.Component {
                                 {book.notes}
                             </div>
                             <div className="right">
-                                <img className="history-book" src={demo} alt={book.title}></img>
+                                {this.chooseImage(book)}
                             </div>
                         </div>
+                        <button onClick={e => this.onDelete(e, book.id)} className="delete button">Delete</ button>
                     </div>
                     </div>
             )})}
@@ -57,4 +92,4 @@ class History extends React.Component {
     }
 }
 
-export default History;
+export default withRouter(History);

@@ -1,22 +1,25 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 import './ProgressBar.css';
 
-function ProgressBar(props){
-    function createBar(goal, progress) {
+class ProgressBar extends React.Component {
+    createBar(goal, progress) {
         const percentChecked = (progress / goal);
-        
+    
         if(percentChecked) {
             return <div style={{flex:percentChecked}} className="progress-box green"></div>
         }
     }
 
-    return (
-        <div className="progress-container">
-            <div className="progress-bar">
-                {createBar(props.goal, props.progress)}
+    render(){
+        return (
+            <div className="progress-container">
+                <div className="progress-bar">
+                    {this.createBar(this.props.goal, this.props.progress)}
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 
-export default ProgressBar;
+export default withRouter(ProgressBar);

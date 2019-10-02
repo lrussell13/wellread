@@ -6,23 +6,9 @@
 
 .profile-book {
     width: 22%;
+    max-width: 180px;
     margin-left: 14px;
     box-shadow: 6px 6px 6px grey;
-}
-
-.achievement {
-    border: solid 1px black; 
-    border-radius: 100%;
-    width: 25px;
-    height: 25px;
-    margin-left: 14px;
-    margin-bottom: 14px;
-}
-
-.achievement-holder {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .profile-title {
@@ -35,7 +21,8 @@ h3 {
 }
 
 h2 {
-    margin: 14px;
+    margin: 12px;
+    text-align: center;
 }
 
 h1 {

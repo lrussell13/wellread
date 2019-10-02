@@ -20,6 +20,7 @@
     text-align: center;
     border-radius: 48px;
     width: 75%;
+    max-width: 400px;
     padding: 16px;
     font-size: 18px;
     color: #707070;
@@ -45,7 +46,7 @@ button {
     background: white;
 }
 
-.login-button {
+.login-button, .register-button {
     margin: 8px;
     border: 2px solid black;
     font-size: 16px;
@@ -68,3 +69,8 @@ button {
     background: #4995C1;
     height: 100vh;
 }
+
+.link :hover {
+    cursor: pointer;
+}
+

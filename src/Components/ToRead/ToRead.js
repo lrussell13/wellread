@@ -1,16 +1,59 @@
 import React from 'react';
 import Nav from '../Nav/Nav';
-import demo from '../../images/demo.jpg';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import UserBookServices from '../Services/user-books-services';
 import './ToRead.css';
 
 class ToRead extends React.Component {
     state = {
-        toRead: [
-            {title: "Title 1", author: "Author 1", rating: 4, notes: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."},
-            {title: "Title 2", author: "Author 2", rating: 3, notes: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."},
-            {title: "Title 3", author: "Author 3", rating: 5, notes: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."},
-        ]
+        toRead: []
+    }
+    
+    chooseImage(book){
+        if(book.cover_i){
+            return <img className="toread-book" src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`} alt={book.title}></img>
+        }
+
+        if(book.oclc){
+            return <img className="toread-book" src={`https://covers.openlibrary.org/b/oclc/${book.oclc}-M.jpg`} alt={book.title}></img>
+        }
+
+        if(book.isbn){
+            return <img className="toread-book" src={`https://covers.openlibrary.org/b/isbn/${book.isbn}-M.jpg`} alt={book.title}></img>
+        }
+
+        return "";
+    }
+    
+    getBooks = () => {
+        UserBookServices.getUsersBooks()
+        .then(res => res.json())
+        .then(books => {
+            let toRead = books.filter(book => book.book_status === 1);    
+            this.setState({toRead});
+        })
+    }
+
+    updateBook(e, id){
+        e.preventDefault();
+
+        const updatedUserBook = {
+            book_status: 2
+        }
+
+        UserBookServices.patchUserBook(updatedUserBook, id)
+        .then(() => this.props.history.push('/user/toread'))
+    }
+
+    onDelete(e, id){
+        e.preventDefault();
+
+        UserBookServices.deleteUserBooks(id)
+        .then(() => this.props.history.push('/user/toread'))
+    }
+
+    componentDidMount(){
+        this.getBooks();
     }
 
     render(){
@@ -21,12 +64,17 @@ class ToRead extends React.Component {
             {this.state.toRead.map((book, i) => {
                 return (
                     <div key={i} className="toread-book-holder">
-                    <Link to="/finish">
                     <h3>{book.title} - {book.author}</h3>
                     <div className="container">
-                        <img className="toread-book" src={demo} alt={book.title}></img>
+                        {this.chooseImage(book)}
                     </div>
-                    </Link>
+                    <div className="links">
+                        <button onClick={e => this.updateBook(e, book.id)} className="current button">Current</ button>
+                        <Link to={`/finish/${book.id}`}>
+                        <button className="finish button">Finish</ button>
+                        </Link>
+                        <button onClick={e => this.onDelete(e, book.id)} className="delete button">Delete</ button>
+                    </div>
                     </div>
             )})}
             </>
@@ -34,4 +82,4 @@ class ToRead extends React.Component {
     }
 }
 
-export default ToRead;
+export default withRouter(ToRead);

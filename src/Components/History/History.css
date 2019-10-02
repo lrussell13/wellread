@@ -8,6 +8,13 @@ h1, h3 {
     box-shadow: 6px 6px 6px grey;
 }
 
+.history-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .rating-circle {
     border: solid 1px black; 
     border-radius: 100%;

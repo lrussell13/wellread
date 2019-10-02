@@ -13,13 +13,3 @@ h1, h3 {
     align-items: center;
     justify-content: center;
 }
-
-.button {
-    width: 80px;
-}
-
-.links {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
