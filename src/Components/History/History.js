@@ -1,6 +1,6 @@
 import React from 'react';
 import Nav from '../Nav/Nav';
-import {withRouter} from 'react-router-dom';
+import { Link, withRouter} from 'react-router-dom';
 import UserBookServices from '../Services/user-books-services';
 import './History.css';
 
@@ -83,7 +83,12 @@ class History extends React.Component {
                                 {this.chooseImage(book)}
                             </div>
                         </div>
-                        <button onClick={e => this.onDelete(e, book.id)} className="delete button">Delete</ button>
+                        <div className="button-holder">
+                            <Link to={`/finish/${book.id}`}>
+                            <button className="delete button">Edit</button>
+                            </Link>
+                            <button onClick={e => this.onDelete(e, book.id)} className="delete button">Delete</ button>
+                        </div>
                     </div>
                     </div>
             )})}

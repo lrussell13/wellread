@@ -11,6 +11,7 @@
     text-align: center;
     border-radius: 48px;
     width: 75%;
+    max-width: 432px;
     padding: 16px;
     font-size: 18px;
     color: #707070;
@@ -41,6 +42,7 @@ button {
     display: flex;
     align-items: center;
     justify-content: center;
+    height: 100vh;
 }
 
 .finish-book {

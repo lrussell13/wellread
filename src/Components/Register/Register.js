@@ -37,6 +37,7 @@ class Register extends React.Component {
     }
 
     render(){
+    const { error } = this.state;
     return (
         <div className="register-page">
             <section className="register">
@@ -47,6 +48,7 @@ class Register extends React.Component {
                     <input id="password" type="password"/>
                     <label htmlFor="repeat-password">Repeat Password</label>
                     <input id="repeat-password" type="password"/>
+                    {error && <p className='red error'>{error}</p>}
                     <button type="submit">Register</button>
                 </form>
             </section>

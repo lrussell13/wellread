@@ -3,6 +3,8 @@ import Nav from '../Nav/Nav';
 import { withRouter } from 'react-router-dom';
 import bookService from '../Services/book-service';
 import UserBookService from '../Services/user-books-services';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './BookSearch.css';
 
 class BookSearch extends React.Component {
@@ -61,16 +63,16 @@ class BookSearch extends React.Component {
             author: this.state.books[i].author_name[0]
         }
 
-        if(this.state.books[0].cover_i){
-            book.cover_i = this.state.books[0].cover_i
+        if(this.state.books[i].cover_i){
+            book.cover_i = this.state.books[i].cover_i
         }
 
-        if(this.state.books[0].oclc){
-            book.oclc = this.state.books[0].oclc[0]
+        if(this.state.books[i].oclc){
+            book.oclc = this.state.books[i].oclc[0]
         }
 
-        if(this.state.books[0].isbn){
-            book.isbn = this.state.books[0].isbn[0]
+        if(this.state.books[i].isbn){
+            book.isbn = this.state.books[i].isbn[0]
         }
 
         bookService.insertBook(book)
@@ -78,7 +80,7 @@ class BookSearch extends React.Component {
         .then(book => {
             let id = book.id;
 
-            if(type === 'current'){
+            if(type === 'Current'){
                 const userBook = {
                     book_id: id,
                     book_status: 2,
@@ -86,7 +88,7 @@ class BookSearch extends React.Component {
                 UserBookService.insertUserBook(userBook)
             }
 
-            if(type === 'toRead'){
+            if(type === 'To Read'){
                 const userBook = {
                     book_id: id,
                     book_status: 1,
@@ -94,7 +96,7 @@ class BookSearch extends React.Component {
                 UserBookService.insertUserBook(userBook)
             }
 
-            if(type === 'finish'){
+            if(type === 'Finished'){
                 const userBook = {
                     book_id: id,
                     book_status: 3,
@@ -105,6 +107,7 @@ class BookSearch extends React.Component {
             }
 
         })
+        .then(() => toast(`Added to '${type}'`, { autoClose: 2000 }))
     }
 
     render(){
@@ -119,6 +122,7 @@ class BookSearch extends React.Component {
                 </div>
                 <input className="book-search-input" onChange={e => this.updateSearchTerm(e)} value={this.state.searchTerm}></input>
             </form>
+            <ToastContainer />
             <div className="results">
             {this.state.books.map((book, i) => {
                 return (
@@ -127,9 +131,9 @@ class BookSearch extends React.Component {
                         {book.author_name ? book.author_name.map(author => <h4 key={i + author}>by {author}</h4>): ""}
                         {this.chooseImage(book)} 
                         <div className="links">
-                            <button onClick={(e) => this.onButtonClick(e, "finish")} value={i} className="finish button">Finished</ button>
-                            <button onClick={(e) => this.onButtonClick(e, "current")} value={i} className="current button">Current</ button>
-                            <button onClick={(e) => this.onButtonClick(e, "toRead")} value={i} className="toRead button">To Read</ button>
+                            <button onClick={(e) => this.onButtonClick(e, "Finished")} value={i} className="finish button">Finished</ button>
+                            <button onClick={(e) => this.onButtonClick(e, "Current")} value={i} className="current button">Current</ button>
+                            <button onClick={(e) => this.onButtonClick(e, "To Read")} value={i} className="toRead button">To Read</ button>
                         </div>
                     </div>
                 )

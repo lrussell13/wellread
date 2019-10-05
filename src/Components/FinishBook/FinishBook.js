@@ -13,11 +13,11 @@ class FinishBook extends React.Component {
     getBook = () => {
         UserBookServices.getUserBookById(this.props.id)
         .then(res => res.json())
-        .then(book => this.setState({ book: book[0] }))
+        .then(book => this.setState({ book: book[0], rating: book[0].rating, notes: book[0].notes}))
     }
 
     componentDidMount(){
-        this.getBook();
+        this.getBook()
     }
 
     updateRating = (e) => {
@@ -74,7 +74,7 @@ class FinishBook extends React.Component {
                             {this.createRating(this.state.rating)}
                         </div>
                         <label htmlFor="notes">Notes</label>
-                        <textarea onChange={(e) => this.updateText(e)} rows="12" cols="25"></textarea>
+                        <textarea onChange={(e) => this.updateText(e)} rows="12" cols="25" value={this.state.notes}></textarea>
                       <button type="submit">Submit</button>
                   </form>
               </section>

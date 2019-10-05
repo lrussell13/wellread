@@ -3,7 +3,8 @@ h1, h3 {
 }
 
 .toread-book {
-    width: 80px;
+    width: 22%;
+    max-width: 180px;
     margin: 14px 0px;
     box-shadow: 6px 6px 6px grey;
 }

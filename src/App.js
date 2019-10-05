@@ -10,6 +10,7 @@ import ToRead from './Components/ToRead/ToRead';
 import BookSearch from './Components/BookSearch/BookSearch';
 import Register from './Components/Register/Register';
 import Current from './Components/Current/Current';
+import ErrrorBoundary from './Components/ErrorBoundary/ErrorBoundary';
 
 class App extends React.Component {
   
@@ -17,16 +18,18 @@ class App extends React.Component {
   render(){
     return (
       <main className='App'>
-        <Switch >
-          <Route path="/" exact render={() => <Login />}/>
-          <PrivateRoute path={"/user/"} exact component={() => <Profile /> }/>
-          <PrivateRoute path={"/user/history"} component={() => < History />}/>
-          <PrivateRoute path={"/user/toread"} component={() => < ToRead />} />
-          <PrivateRoute path={"/user/current"} component={() => < Current />} />
-          <PrivateRoute path={"/search"} component={BookSearch}/>
-          <PrivateRoute path={"/finish/:id"} component={(props) => < FinishBook id={props.match.params.id}/> }/>
-          <PublicOnlyRoute path={"/register"} component={Register}/>
-        </Switch>
+        <ErrrorBoundary>
+          <Switch >
+            <Route path="/" exact render={() => <Login />}/>
+            <PrivateRoute path={"/user/"} exact component={() => <Profile /> }/>
+            <PrivateRoute path={"/user/history"} component={() => < History />}/>
+            <PrivateRoute path={"/user/toread"} component={() => < ToRead />} />
+            <PrivateRoute path={"/user/current"} component={() => < Current />} />
+            <PrivateRoute path={"/search"} component={BookSearch}/>
+            <PrivateRoute path={"/finish/:id"} component={(props) => < FinishBook id={props.match.params.id}/> }/>
+            <PublicOnlyRoute path={"/register"} component={Register}/>
+          </Switch>
+        </ErrrorBoundary>
       </main>
     );
   }
