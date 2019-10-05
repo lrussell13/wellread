@@ -1,6 +1,7 @@
 # Wellread
 
 Live App: https://wellread.lancebryanrussell.now.sh/
+Server Repo: https://github.com/lrussell13/wellread-server
 
 ![screenshots](src/images/readme-image.png)
 
